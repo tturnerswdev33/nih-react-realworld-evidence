@@ -1,3 +1,10 @@
+# PROJECT OVERVIEW
+
+This project is just a clone of the Real-World Evidence page on the NIH NCATS Open Data Portal. That page is developed in Angular whereas this CLONE is developed as React + Vite app. The data file is public.
+You can access the original page and data at:
+
+https://opendata.ncats.nih.gov/covid19/variant/real-world-evidence
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
