@@ -100,12 +100,12 @@ export default function App() {
     endpoint: [],
     lineage: []
   });
-
   const [expanded, setExpanded] = useState({
     treatments: false,
     endpoint: false,
     lineage: false
   });
+  const [showModal, setShowModal] = useState(false);
 
 const Header = () => (
   <>
@@ -161,7 +161,9 @@ const Header = () => (
         </span>
         <p style={{ fontSize: '1rem', marginTop: '0.5rem', marginBottom: 0 }}> 
           Browse high-level summaries of real-world outcomes for EUA/FDA approved and revoked COVID-19 therapeutics.<br />
-          <a href="#" style={{ color: 'white', textDecoration: 'underline' }}>Which Real-World Evidence studies are being collected here?</a>
+          <span style={{ color: 'white', textDecoration: 'underline', cursor: 'pointer' }} onClick={() => setShowModal(true)}>
+            Which Real-World Evidence studies are being collected here?
+          </span>
         </p>
         <div style={{ marginTop: '1rem' }}>
           <a href="/data/realworld_evidence.csv" download style={{ backgroundColor: 'white', color: '#77317d', padding: '0.75rem 1.25rem', borderRadius: '0.5rem', textDecoration: 'none', fontWeight: 'bold', border: '2px solid #77317d' }}>
@@ -181,24 +183,24 @@ const Footer = () => (
               <div className="col-md-4 mb-4">
                 <ul style={{ listStyle: 'none', paddingLeft: 0 }}>
                   <li><a href="#" style={{ color: 'white', textDecoration: 'underline' }}>HOME</a></li>
-                  <li><a href="#" style={{ color: 'white', textDecoration: 'underline' }}>ABOUT</a></li>
-                  <li><a href="#" style={{ color: 'white', textDecoration: 'underline' }}>DATA EXPLORER</a></li>
+                  <li><a href="https://opendata.ncats.nih.gov/covid19/about" style={{ color: 'white', textDecoration: 'underline' }}>ABOUT</a></li>
+                  <li><a href="https://opendata.ncats.nih.gov/covid19/databrowser" style={{ color: 'white', textDecoration: 'underline' }}>DATA EXPLORER</a></li>
                 </ul>
               </div>
               <div className="col-md-4 mb-4">
                 <ul style={{ borderLeft: 'solid 1px #CCCCCC', listStyle: 'none', paddingLeft: '20px' }}>
-                  <li><a href="#" style={{ color: 'white', textDecoration: 'underline' }}>NIH HOME</a></li>
-                  <li><a href="#" style={{ color: 'white', textDecoration: 'underline' }}>NCATS HOME</a></li>
-                  <li><a href="#" style={{ color: 'white', textDecoration: 'underline' }}>PRIVACY NOTICE</a></li>
-                  <li><a href="#" style={{ color: 'white', textDecoration: 'underline' }}>DISCLAIMER</a></li>
-                  <li><a href="#" style={{ color: 'white', textDecoration: 'underline' }}>HHS VULNERABILITY DISCLOSURE</a></li>
-                  <li><a href="#" style={{ color: 'white', textDecoration: 'underline' }}>ACCESSIBILITY</a></li>
+                  <li><a href="https://www.nih.gov/" style={{ color: 'white', textDecoration: 'underline' }}>NIH HOME</a></li>
+                  <li><a href="https://ncats.nih.gov/" style={{ color: 'white', textDecoration: 'underline' }}>NCATS HOME</a></li>
+                  <li><a href="https://ncats.nih.gov/privacy" style={{ color: 'white', textDecoration: 'underline' }}>PRIVACY NOTICE</a></li>
+                  <li><a href="https://ncats.nih.gov/disclaimer" style={{ color: 'white', textDecoration: 'underline' }}>DISCLAIMER</a></li>
+                  <li><a href="https://www.hhs.gov/vulnerability-disclosure-policy/index.html" style={{ color: 'white', textDecoration: 'underline' }}>HHS VULNERABILITY DISCLOSURE</a></li>
+                  <li><a href="https://ncats.nih.gov/accessibility" style={{ color: 'white', textDecoration: 'underline' }}>ACCESSIBILITY</a></li>
                 </ul>
               </div>
               <div className="col-md-4 col-lg-4">
                 <div style={{ backgroundColor: '#6c2d6b', padding: '1rem', borderRadius: '4px', marginRight: '8rem'}}>
                   <p>If you have problems viewing PDF files, download the latest version of <a href="#" style={{ color: 'white', textDecoration: 'underline' }}>Adobe Reader</a>.</p>
-                  <p>For language access assistance, contact the <a href="#" style={{ color: 'white', textDecoration: 'underline' }}>NCATS Public Information Officer</a>.</p>
+                  <p>For language access assistance, contact the <a href="mailto:info@ncats.nih.gov" style={{ color: 'white', textDecoration: 'underline' }}>NCATS Public Information Officer</a>.</p>
                   <p>National Center for Advancing Translational Sciences (NCATS), 6701 Democracy Boulevard, Bethesda, MD 20892-4874 | 📞 301-594-8966</p>
                 </div>
               </div>
@@ -478,6 +480,49 @@ const Footer = () => (
       </div>
     </div>
     <Footer />
+
+    {showModal && (
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 9999
+      }}>
+        <div style={{
+          backgroundColor: 'white',
+          color: 'black',
+          padding: '2rem',
+          borderRadius: '8px',
+          maxWidth: '600px',
+          boxShadow: '0 0 20px rgba(0,0,0,0.3)'
+        }}>
+          <p>This dataset includes a curated list of COVID-19 real-world evidence studies (preprint and peer-reviewed publications). Selected publications met the following inclusion criteria:</p>
+          <ol>
+            <li>Included a COVID-19 EUA or FDA approved or revoked therapeutic</li>
+            <li>Included a metric of analysis, such as hazard or odds ratio</li>
+            <li>Included a comparator or control in analysis</li>
+            <li>Reported a cohort size ≥ 10</li>
+          </ol>
+          <div style={{ textAlign: 'right' }}>
+            <button onClick={() => setShowModal(false)} style={{
+              backgroundColor: '#531958',
+              color: 'white',
+              border: 'none',
+              padding: '0.5rem 1rem',
+              borderRadius: '4px',
+              cursor: 'pointer'
+            }}>Close</button>
+          </div>
+        </div>
+      </div>
+    )}
+
     </>
   );
 }
